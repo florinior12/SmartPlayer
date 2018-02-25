@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block body %}
+    <form method="POST" action="/">
+      <input type="text" name="song">
+      <input type="submit" class="btn btn-info" value="Search">
+    </form>
+    <a href="show_all" class="btn btn-default" id="show_songs">Show liked songs</a>
+    <div>
+      {% if results|length != 0 %}
+        <table>
+          {% for vid in results %}
+            <tr>
+                <td rowspan="3"><img src="{{vid.thumbnail}}"></td>
+                <td class="video_link"><a href="https://www.youtube.com/watch?v={{vid.id}}"><h4 class="video_title">{{vid.title}}</h4></a></td>
+                <tr><td class="video_date">{{vid.date}}</td></tr>
+                <tr><td><button class="btn btn-default" id="like_button">I like this song!</a></td></tr>
+            </tr>
+          {% endfor %}
+      
+        </table>
+      {% endif %}
+    </div>
+    
+{% endblock %}
