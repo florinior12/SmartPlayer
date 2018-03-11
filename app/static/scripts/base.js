@@ -21,7 +21,7 @@ $(document).ready(function () {
                 
 
                 $.ajax({
-                    url: '/addVideo',
+                    url: '/add_video',
                     data: JSON.stringify({date: video_date, link:video_id, title:video_title}),
                     type: 'POST',
                     success: function(response) {
@@ -43,7 +43,21 @@ $(document).ready(function () {
               player.loadVideoById($(this).attr('href'));
               return false;
             });
-            
+            $('a#play_track_name').click(function() {
+              var track_name = $(this).text();
+              var artist_name = $(this).closest('tr').next().text();
+              $.ajax ({
+                url : '/play_song',
+                data: JSON.stringify({track: track_name, artist: artist_name}),
+                type: 'POST',
+                success: function(response) {
+                  player.loadVideoById(response['id']);
+                },
+                dataType: "json",
+                contentType: 'application/json;charset=UTF-8'
+              });
+              return  false;
+            });
           });
 
           

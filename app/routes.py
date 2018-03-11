@@ -13,7 +13,7 @@ def show_all():
   print(results)
   return render_template('show_all.html', results=results)
 
-@app.route('/addVideo', methods=['POST'])
+@app.route('/add_video', methods=['POST'])
 def add_video():
   try:
     add_song(request)
@@ -27,6 +27,14 @@ def delete_all():
   delete_all_songs()
   return render_template('index.html',title='Home',message="Deleted all songs")
 
+@app.route('/play_song', methods = ['POST'])
+def play_song():
+  query = request.get_json()['artist'] + ' ' + request.get_json()['track']
+  print(query)
+  response = youtube_search(max_results=1,q=query,key=app.config['YOUTUBE_API_KEY'])
+  video = parse_response(response)
+  print(video['id'])
+  return jsonify({"id":video['id']})
 
 @app.route('/', methods=["GET", "POST"])
 @app.route('/index', methods=["GET", "POST"])
