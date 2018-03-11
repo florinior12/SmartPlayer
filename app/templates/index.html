@@ -5,20 +5,31 @@
   {% if message %}
     {{message}}
   {% endif %}
-    <form method="POST" action="/">
-      <input type="text" name="song">
-      <input type="submit" class="btn btn-info" value="Search">
-    </form>
-    <a href="show_all" class="btn btn-default" id="show_songs">Show liked songs</a>
+    
+    
     <div>
-      {% if results|length != 0 %}
+      {% if videos_yt|length != 0 %}
         <table border=0>
-          {% for vid in results %}
+          {% for vid in videos_yt %}
             <tr>
                 <td rowspan="3"><img src="{{vid.thumbnail}}"></td>
                 <td class="video_link"><a href="{{vid.link}}"><h4 class="video_title">{{vid.title}}</h4></a></td>
                 <tr><td class="video_date">{{vid.date}}</td></tr>
                 <tr><td><button class="btn btn-default" id="like_button">I like this song!</button><div id='liked_label'>{{vid.liked}}</div></td></tr>
+            </tr>
+          {% endfor %}
+      
+        </table>
+      {% endif %}
+
+      {% if songs_lfm|length != 0 %}
+        <table border=0>
+          {% for song in songs_lfm %}
+            <tr>
+                <td rowspan="2"><img src="{{song.thumbnail}}"></td>
+                <td class="song_link"><a href="#"><h4 class="song_name">{{song.track_name}}</h4></a></td>
+                <tr><td class="song_artist">{{song.artist}}</td></tr>
+                
             </tr>
           {% endfor %}
       

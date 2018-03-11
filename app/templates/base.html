@@ -1,6 +1,7 @@
 <html>
     <head>
      <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/bootstrap.css') }}">
+     <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles/base.css') }}">
       <script src="{{ url_for('static',filename='scripts/jquery.js') }}"></script>
       <script type=text/javascript>
       $(document).ready(function () {
@@ -57,8 +58,36 @@
       {% endif %}
     </head>
     <body>
-       {% block body %}
-        {% endblock %}
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-md-1">
+            <p>LOGO</p>
+            
+          </div>
+          <div class="col-xs-12 col-md-11">
+            <form method="POST" action="/">
+              <input type="text" name="song">
+              <input type="submit" class="btn btn-info" value="Search">
+            </form>
+            
+          </div>
+        </div>
+        
+        <div class="row">
+          <div class="section col-md-1">
+            <a href="show_all" class="btn btn-default" id="show_songs">Show liked songs</a>
+            
+          </div>
+          <div class="pre-scrollable">
+            <div class="section col-xs-12 col-md-11">
+              {% block body %}
+                  {% endblock %}
+              
+            </div>
+          </div>
+        </div>
+      </div>
+       
     </body>
 
 </html>

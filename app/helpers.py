@@ -7,15 +7,20 @@ def parse_response(response):
       _date = video['snippet']['publishedAt'].split('T')[0]
       _thumbnail = video['snippet']['thumbnails']['default']['url']
       _liked = check_liked(_link)
+
       video_list.append({'link':_link,
         'title':_title,
         'date':_date,
         'thumbnail':_thumbnail,
-        'liked':_liked})
+        'liked':_liked
+        })
 
   print("Parsed a total of " + str(len(video_list)) + " videos")
   #print(video_list)
-  return video_list
+  if len(video_list)>1:
+    return video_list
+  else:
+    return video_list[0]
 
 def check_liked(link):
   if Songs.query.filter_by(song_link=link).first():
