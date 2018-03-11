@@ -3,7 +3,7 @@ from app import app, db
 from app.youtube_videos import youtube_search
 from app.helpers import parse_response
 from app.models import Songs
-from app.controllers import add_song, show_songs
+from app.controllers import add_song, show_songs, delete_all_songs
 import datetime
 
 @app.route('/show_all', methods=['GET'])
@@ -21,8 +21,14 @@ def add_video():
     print(e)
     return jsonify(message="Song failed to add!")
   
+@app.route('/delete_all', methods=['GET'])
+def delete_all():
+  delete_all_songs()
+  return render_template('index.html',title='Home',message="Deleted all songs")
+
 
 @app.route('/', methods=["GET", "POST"])
+@app.route('/index', methods=["GET", "POST"])
 def index():
   video_list = []
   if request.form:
@@ -30,3 +36,4 @@ def index():
     video_list = parse_response(response)
 
   return render_template('index.html',title='Home',results=video_list)
+

@@ -18,3 +18,7 @@ def add_song(request):
 def show_songs():
   songs = Songs.query.all()
   return songs
+
+def delete_all_songs():
+  Songs.query.delete()
+  db.session.commit()

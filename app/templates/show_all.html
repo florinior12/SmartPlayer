@@ -1,20 +1,27 @@
 {% extends "base.html" %}
 
 {% block body %}
+
+  <a href="delete_all">Delete all songs</a>
   <table class="table-striped">
     <thead>
       <th>Link</th>
       <th>Song title</th>
       <th>Song publish date</th>
+      <th>Added at</th>
     </thead>
     <tbody>
     {% for entry in results %}
       <tr>
-        <td>{{entry.song_link}}</td>
+        <td><a href="{{entry.song_link}}">{{entry.song_link}}</a></td>
         <td>{{entry.song_title}}</td>
         <td>{{entry.song_date}}</td>
+        <td>{{entry.created_at}}</td>
+        
       </tr>
     {% endfor %}
     </tbody>
   </table>
+
+  <a href="index">Go back</a>
 {% endblock %}
