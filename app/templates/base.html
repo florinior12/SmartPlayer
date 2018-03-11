@@ -20,7 +20,7 @@
   <body>
     <nav class="navbar navbar-toggleable-md navbar-inverse fixed-top bg-info">
       
-      <a class="navbar-brand text-black" href="#">SmartPlayer</a>
+      <a class="navbar-brand text-black" href="/index">SmartPlayer</a>
 
       <div class="collapse navbar-collapse" id="navbarsExampleDefault">
         
@@ -35,6 +35,8 @@
       <div class="row">
         <nav class="col-sm-3 col-md-2 hidden-xs-down bg-inverse sidebar">
           <a href="show_all" class="btn btn-default" id="show_songs">Show liked songs</a>
+
+          <div class="player" id = "my_player"></div>
         </nav>
 
         <main class="col-sm-9 offset-sm-3 col-md-10 offset-md-2 pt-3 bg-faded">
@@ -52,53 +54,11 @@
     
     
     <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
-    <script src="{{ url_for('static',filename='scripts/bootstrap.min.js') }}"></script>
     <script src="{{ url_for('static',filename='scripts/jquery.js') }}"></script>
-    <script type=text/javascript>
-      $(document).ready(function () {
-          $(function() {
-            $('button#like_button').click(function() {
-                var video_date = $(this).closest('tr')
-                  .prev()
-                  .find('td.video_date')
-                  .html();
-                var video_link = $(this).closest('tr')
-                  .prev()
-                  .prev()
-                  .find('td.video_link')
-                  .find('a')
-                  .attr('href');
-                var video_title = $(this).closest('tr')
-                  .prev()
-                  .prev()
-                  .find('td.video_link')
-                  .find('.video_title')
-                  .html();
-                var button = $(this);
-
-                $.ajax({
-                    url: '/addVideo',
-                    data: JSON.stringify({date: video_date, link:video_link, title:video_title}),
-                    type: 'POST',
-                    success: function(response) {
-                        var cell = button.closest('td');
-                        if(cell.children('i').length==0 &&  cell.find('div#liked_label').html()=='') {
-                          cell.append('<i> Added song!</i>');
-                        }
-                    },
-                    error: function(response) {
-                        console.log("Something went wrong! See response below" )
-                        console.log(response)
-                    },
-                    dataType: "json",
-                    contentType: 'application/json;charset=UTF-8'
-
-                });
-            });
-
-            
-          });
-        });
-      </script>
+    <script src="{{ url_for('static',filename='scripts/bootstrap.min.js') }}"></script>
+    
+    <script src="{{ url_for('static',filename='scripts/base.js') }}"></script>
+    <script src="{{ url_for('static',filename='scripts/player.js') }}"></script>
+    <script src="https://www.youtube.com/iframe_api"></script>
   </body>
 </html>

@@ -13,7 +13,7 @@
           {% for vid in videos_yt %}
             <tr>
                 <td rowspan="3"><img src="{{vid.thumbnail}}"></td>
-                <td class="video_link"><a href="{{vid.link}}"><h4 class="video_title">{{vid.title}}</h4></a></td>
+                <td class="video_id"><a id="play_id" href="{{vid.id}}"><h4 class="video_title">{{vid.title}}</h4></a></td>
                 <tr><td class="video_date">{{vid.date}}</td></tr>
                 <tr><td><button class="btn btn-default" id="like_button">I like this song!</button><div id='liked_label'>{{vid.liked}}</div></td></tr>
             </tr>

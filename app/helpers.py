@@ -2,13 +2,13 @@ from app.models import Songs
 def parse_response(response):
   video_list = []
   for video in response[1]:
-      _link = "https://www.youtube.com/watch?v=" + video['id']['videoId']
+      _id =  video['id']['videoId']
       _title = video['snippet']['title']
       _date = video['snippet']['publishedAt'].split('T')[0]
       _thumbnail = video['snippet']['thumbnails']['default']['url']
-      _liked = check_liked(_link)
+      _liked = check_liked(_id)
 
-      video_list.append({'link':_link,
+      video_list.append({'id':_id,
         'title':_title,
         'date':_date,
         'thumbnail':_thumbnail,
