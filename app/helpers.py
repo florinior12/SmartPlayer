@@ -1,12 +1,13 @@
 from app.models import Songs
 def parse_response(response):
   video_list = []
+  print(response[1])
   for video in response[1]:
       _id =  video['id']['videoId']
       _title = video['snippet']['title']
       _date = video['snippet']['publishedAt'].split('T')[0]
       _thumbnail = video['snippet']['thumbnails']['default']['url']
-      _liked = check_liked(_id)
+      _liked = search_liked(_id)
 
       video_list.append({'id':_id,
         'title':_title,
@@ -22,8 +23,8 @@ def parse_response(response):
   else:
     return video_list[0]
 
-def check_liked(link):
+def search_liked(link):
   if Songs.query.filter_by(song_link=link).first():
-    return 'Liked'
+    return 'liked'
   else:
-    return ''
+    return 'not_liked'

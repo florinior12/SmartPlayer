@@ -20,7 +20,16 @@ h1 {
 /*
  * Sidebar
  */
+button.like_button {
+  border: 0;
+  background: transparent;
+  position: absolute;
+  bottom: 250px;
+  left: 0;
+  right: 0;
 
+ 
+}
 .sidebar {
   position: fixed;
   top: 51px;

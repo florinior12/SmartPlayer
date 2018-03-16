@@ -4,16 +4,37 @@ var player,
 function onYouTubeIframeAPIReady() {
     player = new YT.Player('my_player', {
         playerVars: {
-            color: 'white'
+            color: 'green'
         },
         events: {
-            onReady: initialize
+
+            onReady: initialize,
+            onStateChange: onPlayerStateChange
         }
     });
+   
 }
+function onPlayerStateChange() {
+    
+    $.ajax({
+            url: '/check_liked',
+            data: JSON.stringify({id: player.getVideoData()['video_id']}),
+            type: 'POST',
+            success: function(response) {
+                $("#love_button").attr("src","static/images/"+response['liked']+".png");
+            },
+            error: function(response) {
+                console.log("Something went wrong while checking liked! See response below" )
+                console.log(response)
+            },
+            dataType: "json",
+            contentType: 'application/json;charset=UTF-8'
 
+        });
+}
 function initialize(){
-
+    //$('#love_button')
+    
     // Update the controls on load
     updateTimerDisplay();
     updateProgressBar();
@@ -30,6 +51,7 @@ function initialize(){
 
 
     $('#volume-input').val(Math.round(player.getVolume()));
+
 }
 
 
@@ -45,6 +67,7 @@ function updateTimerDisplay(){
 function updateProgressBar(){
     // Update the value of our progress bar accordingly.
     $('#progress-bar').val((player.getCurrentTime() / player.getDuration()) * 100);
+
 }
 
 
@@ -125,6 +148,7 @@ $('.thumbnail').on('click', function () {
     var url = $(this).attr('data-video-id');
 
     player.cueVideoById(url);
+
 
 });
 

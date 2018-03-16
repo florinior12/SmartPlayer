@@ -1,4 +1,5 @@
 $(document).ready(function () {
+          var liked = false;
           $(function() {
             $('button#like_button').click(function() {
                 var video_date = $(this).closest('tr')
@@ -26,7 +27,7 @@ $(document).ready(function () {
                     type: 'POST',
                     success: function(response) {
                         var cell = button.closest('td');
-                        if(cell.children('i').length==0 &&  cell.find('div#liked_label').html()=='') {
+                        if(cell.children('i').length==0) {
                           cell.append('<i> Added song!</i>');
                         }
                     },
@@ -52,6 +53,7 @@ $(document).ready(function () {
                 type: 'POST',
                 success: function(response) {
                   player.loadVideoById(response['id']);
+
                 },
                 dataType: "json",
                 contentType: 'application/json;charset=UTF-8'
@@ -60,5 +62,5 @@ $(document).ready(function () {
             });
           });
 
-          
-        });
+
+});

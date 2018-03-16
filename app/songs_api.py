@@ -7,6 +7,7 @@ FORMAT_JSON = '&format=json'
 
 def top_tracks(key):
   url = LAST_FM_API + GET_TOP_TRACKS + key + FORMAT_JSON
+  print(url)
   my_resp = requests.get(url)
   to_return = []
 
