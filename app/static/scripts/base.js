@@ -1,35 +1,32 @@
 $(document).ready(function () {
           var liked = false;
           $(function() {
-            $('button#like_button').click(function() {
-                var video_date = $(this).closest('tr')
-                  .prev()
-                  .find('td.video_date')
-                  .html();
-                var video_id = $(this).closest('tr')
-                  .prev()
-                  .prev()
-                  .find('td.video_id')
-                  .find('a')
-                  .attr('href');
-                var video_title = $(this).closest('tr')
-                  .prev()
-                  .prev()
-                  .find('td.video_id')
-                  .find('.video_title')
-                  .html();
+            $('button.like_button').click(function() {
+                // var video_date = $(this).closest('tr')
+                //   .prev()
+                //   .find('td.video_date')
+                //   .html();
+                // var video_id = $(this).closest('tr')
+                //   .prev()
+                //   .prev()
+                //   .find('td.video_id')
+                //   .find('a')
+                //   .attr('href');
+                // var video_title = $(this).closest('tr')
+                //   .prev()
+                //   .prev()
+                //   .find('td.video_id')
+                //   .find('.video_title')
+                //   .html();
                 var button = $(this);
-                
+                //console.log(player.getVideoData());
 
                 $.ajax({
                     url: '/add_video',
-                    data: JSON.stringify({date: video_date, link:video_id, title:video_title}),
+                    data: JSON.stringify({ link:player.getVideoData()['video_id'], title:player.getVideoData()['title']}),
                     type: 'POST',
                     success: function(response) {
-                        var cell = button.closest('td');
-                        if(cell.children('i').length==0) {
-                          cell.append('<i> Added song!</i>');
-                        }
+                        $("#love_button").attr("src","static/images/liked.png");
                     },
                     error: function(response) {
                         console.log("Something went wrong! See response below" )

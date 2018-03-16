@@ -8,7 +8,7 @@ class Songs(db.Model):
   created_at = db.Column(db.DateTime())
   updated_at = db.Column(db.DateTime())
 
-  def __init__(self, song_link, song_title, song_date, created_at, updated_at):
+  def __init__(self, song_link, song_title, created_at, updated_at, song_date=None):
     self.song_link = song_link
     self.song_title = song_title
     self.song_date = song_date
