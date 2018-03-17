@@ -4,7 +4,7 @@ from app.youtube_videos import youtube_search
 from app.helpers import parse_response, search_liked
 from app.models import Songs
 from app.controllers import add_song, show_songs, delete_all_songs
-from app.songs_api import top_tracks
+from app.songs_api import top_tracks, search_track
 import datetime
 
 @app.route('/show_all', methods=['GET'])
@@ -29,16 +29,17 @@ def delete_all():
 
 @app.route('/play_song', methods = ['POST'])
 def play_song():
-  query = request.get_json()['artist'] + ' ' + request.get_json()['track']
-  #print(query)
-  response = youtube_search(max_results=1,q=query,key=app.config['YOUTUBE_API_KEY'])
-  video = parse_response(response)
-  #print(video['id'])
-  return jsonify({"id":video['id']})
+  if request.get_json()['type'] == 'lastfm':
+    query = request.get_json()['artist'] + ' ' + request.get_json()['track']
+    response = youtube_search(max_results=1,q=query,key=app.config['YOUTUBE_API_KEY'])
+    video = parse_response(response)
+    return jsonify({"id":video['id']})
+  elif request.get_json()['type'] == 'yt':
+    song_info = search_track(request.get_json()['title'], key=app.config['LASTFM_API_KEY']) #returns a dictionary
+    return jsonify(song_info)
 
 @app.route('/check_liked', methods=['POST'])
 def check_liked():
-  print("I RECEIVED " + request.get_json()['id'])
   liked = search_liked(request.get_json()['id'])
   return jsonify({"liked":liked})
 

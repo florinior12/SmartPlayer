@@ -1,7 +1,7 @@
 from app.models import Songs
 def parse_response(response):
   video_list = []
-  print(response[1])
+
   for video in response[1]:
       _id =  video['id']['videoId']
       _title = video['snippet']['title']
@@ -16,7 +16,6 @@ def parse_response(response):
         'liked':_liked
         })
 
-  print("Parsed a total of " + str(len(video_list)) + " videos")
   #print(video_list)
   if len(video_list)>1:
     return video_list
@@ -28,3 +27,13 @@ def search_liked(link):
     return 'liked'
   else:
     return 'not_liked'
+
+def process_title(title):
+  title = title.lower()
+  print('Lower title' + title)
+  keywords_to_remove = ['official video', 'official audio', 'official music video', 'lyric video', 'audio', 'official lyric video', '[]', '()' ]
+  for kw in keywords_to_remove:
+
+    title = title.replace(kw,'')
+
+  return title

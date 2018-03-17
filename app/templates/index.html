@@ -14,7 +14,7 @@
           {% for vid in videos_yt %}
             <tr>
                 <td rowspan="2"><img src="{{vid.thumbnail}}"></td>
-                <td class="video_id"><a id="play_id" href="{{vid.id}}"><h4 class="video_title">{{vid.title}}</h4></a></td>
+                <td class="video_id"><a class = "play_id" id="{{vid.id}}" href="#"><h4 class="video_title">{{vid.title}}</h4></a></td>
                 <tr><td class="video_date">{{vid.date}}</td></tr>
                 
             </tr>
