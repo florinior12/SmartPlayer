@@ -14,23 +14,24 @@ function onYouTubeIframeAPIReady() {
     });
    
 }
-function onPlayerStateChange() {
-    
-    $.ajax({
-            url: '/check_liked',
-            data: JSON.stringify({id: player.getVideoData()['video_id']}),
-            type: 'POST',
-            success: function(response) {
-                $("#love_button").attr("src","static/images/"+response['liked']+".png");
-            },
-            error: function(response) {
-                console.log("Something went wrong while checking liked! See response below" )
-                console.log(response)
-            },
-            dataType: "json",
-            contentType: 'application/json;charset=UTF-8'
+function onPlayerStateChange(event) {
+    if (event.data == YT.PlayerState.PLAYING) {
+        $.ajax({
+                url: '/check_liked',
+                data: JSON.stringify({id: player.getVideoData()['video_id']}),
+                type: 'POST',
+                success: function(response) {
+                    $("#love_button").attr("src","static/images/"+response['liked']+".png");
+                },
+                error: function(response) {
+                    console.log("Something went wrong while checking liked! See response below" )
+                    console.log(response)
+                },
+                dataType: "json",
+                contentType: 'application/json;charset=UTF-8'
 
-        });
+            });
+    }
 }
 function initialize(){
     //$('#love_button')

@@ -1,0 +1,15 @@
+<div>
+  <h2>Songs charts</h2>
+    <table border=0>
+      {% for song in songs_lfm %}
+        <tr>
+            <td rowspan="2"><img src="{{song.thumbnail}}"></td>
+            <td class="song_link"><a id="play_track_name" href="#"><h4 class="song_name">{{song.track_name}}</h4></a></td>
+            <tr><td class="song_artist">{{song.artist}}</td></tr>
+            
+        </tr>
+      {% endfor %}
+    </table>
+</div>
+<script src="{{ url_for('static',filename='scripts/popular.js') }}"></script>
+<script src="{{ url_for('static',filename='scripts/player.js') }}"></script>

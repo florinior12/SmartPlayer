@@ -1,4 +1,4 @@
-from flask import render_template, request, jsonify
+from flask import render_template, request, jsonify, session
 from app import app, db
 from app.youtube_videos import youtube_search
 from app.helpers import parse_response, search_liked
@@ -7,7 +7,9 @@ from app.controllers import add_song, show_songs, delete_all_songs
 from app.songs_api import top_tracks, search_track
 import datetime
 
-@app.route('/show_all', methods=['GET'])
+
+
+@app.route('/show_all', methods=['GET', 'POST'])
 def show_all():
   results = show_songs()
   #print(results)
@@ -43,17 +45,21 @@ def check_liked():
   liked = search_liked(request.get_json()['id'])
   return jsonify({"liked":liked})
 
+@app.route('/search_song', methods=['POST'])
+def search_song():
+  response = youtube_search(q=request.get_json()['query'],key=app.config['YOUTUBE_API_KEY'])
+  video_list = parse_response(response)
+  return render_template('search.html',videos_yt=video_list)
+
+@app.route('/popular_songs', methods=['GET'])
+def popular_songs():
+  video_list = []
+  if not 'songs_list' in session:
+      session['songs_list'] = top_tracks(key=app.config['LASTFM_API_KEY'])
+  return render_template('popular.html', songs_lfm=session['songs_list'])
+
 @app.route('/', methods=["GET", "POST"])
 @app.route('/index', methods=["GET", "POST"])
 def index():
-  video_list = []
-  songs_list = []
-  if request.form:
-    response = youtube_search(q=request.form.get("song"),key=app.config['YOUTUBE_API_KEY'])
-    video_list = parse_response(response)
-  else:
-    songs_list = top_tracks(key=app.config['LASTFM_API_KEY'])
-    
-
-  return render_template('index.html',title='Home',videos_yt=video_list, songs_lfm=songs_list)
+  return render_template('base.html')
 
