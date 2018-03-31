@@ -1,26 +1,20 @@
-
-
-
-  <h2>Liked songs</h2>
-  <a href="delete_all">Delete all songs</a>
-  <table class="table-striped">
-    <thead>
-      <th>Link</th>
-      <th>Song title</th>
-      <th>Song publish date</th>
-      <th>Added at</th>
-    </thead>
-    <tbody>
-    {% for entry in results %}
+<h2>Liked songs</h2>
+{% if message %}
+<h5>{{message}}</h5>
+{% endif %}
+<a id="delete_all" href="#">Delete all songs</a>
+<table border=0>
+    {% for song in songs %}
       <tr>
-        <td><a href="{{entry.song_link}}">{{entry.song_link}}</a></td>
-        <td>{{entry.song_title}}</td>
-        <td>{{entry.song_date}}</td>
-        <td>{{entry.created_at}}</td>
-        
+          <td rowspan="3"><img src="https://img.youtube.com/vi/{{song.song_link}}/default.jpg"></td>
+          <td class="video_id"><a class = "play_id" id="{{song.song_link}}" href="#"><h5 class="video_title"><strong>{{song.song_title}}</strong></h5></a></td>
+          <tr><td class="video_date"><h5>{{song.song_artist}}</h5></td></tr>
+          <tr><td class="video_date">{{song.tags}}</td></tr>
+          
       </tr>
     {% endfor %}
-    </tbody>
-  </table>
 
-  <a href="index">Go back</a>
+</table>
+
+<script src="{{ url_for('static',filename='scripts/show_all.js') }}"></script>
+<script src="{{ url_for('static',filename='scripts/player.js') }}"></script>

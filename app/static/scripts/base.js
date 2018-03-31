@@ -15,6 +15,24 @@ $(document).ready(function () {
           });
            return false;
         });
+    $('input#search_query').on('keydown', function(e) {
+        if (e.which == 13) {
+            e.preventDefault();
+            $.ajax({
+            url: '/search_song',
+              data: JSON.stringify({ query : $('#search_query').val()}),
+              type: 'POST',
+              success: function(response) {
+                  $('#my_container').html(response);
+              },
+              error: function(response) {
+                  console.log("Something went wrong! See response below" )
+                  console.log(response)
+              },
+              contentType: 'application/json;charset=UTF-8'
+          });
+        }
+      });
     $('#show_songs').click(function() {
            $.ajax({
             url: '/show_all',
@@ -25,37 +43,38 @@ $(document).ready(function () {
           });
            return false;
         });
-      $('button.like_button').click(function() {
-          var button = $(this);
 
-          $.ajax({
-              url: '/add_video',
-              data: JSON.stringify({ link:player.getVideoData()['video_id'], title:player.getVideoData()['title']}),
-              type: 'POST',
-              success: function(response) {
-                  $("#love_button").attr("src","static/images/liked.png");
-              },
-              error: function(response) {
-                  console.log("Something went wrong! See response below" )
-                  console.log(response)
-              },
-              dataType: "json",
-              contentType: 'application/json;charset=UTF-8'
+    $('button.like_button').click(function() {
+        var button = $(this);
 
-          });
-      });
-
-      $('a.index_page').click(function() {
         $.ajax({
-          url  : '/popular_songs',
-          type : 'GET',
-          success: function(response) {
-                  $('#my_container').html(response);
-              }
+            url: '/add_video',
+            data: JSON.stringify({ link:player.getVideoData()['video_id'],
+             yt_title:player.getVideoData()['title'],
+              artist:$('#song_artist').text(),
+               track:$('#song_title').text()}),
+            type: 'POST',
+            success: function(response) {
+                $("#love_button").attr("src","static/images/liked.png");
+            },
+            error: function(response) {
+                console.log("Something went wrong! See response below" )
+                console.log(response)
+            },
+            dataType: "json",
+            contentType: 'application/json;charset=UTF-8'
+
         });
-        return false;
+    });
+
+    $('a.index_page').click(function() {
+      $.ajax({
+        url  : '/popular_songs',
+        type : 'GET',
+        success: function(response) {
+                $('#my_container').html(response);
+            }
       });
-
-      
+      return false;
+    });    
 });
-

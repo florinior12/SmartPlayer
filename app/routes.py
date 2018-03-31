@@ -11,9 +11,9 @@ import datetime
 
 @app.route('/show_all', methods=['GET', 'POST'])
 def show_all():
-  results = show_songs()
+  songs = show_songs()
   #print(results)
-  return render_template('show_all.html', results=results)
+  return render_template('show_all.html', songs=songs)
 
 @app.route('/add_video', methods=['POST'])
 def add_video():
@@ -27,7 +27,7 @@ def add_video():
 @app.route('/delete_all', methods=['GET'])
 def delete_all():
   delete_all_songs()
-  return render_template('index.html',title='Home',message="Deleted all songs")
+  return render_template('show_all.html',message="Deleted all songs")
 
 @app.route('/play_song', methods = ['POST'])
 def play_song():
