@@ -19,8 +19,7 @@ def add_song(request):
   else:
     tags = track_tags(artist,track,key=app.config['LASTFM_API_KEY'])
     song = Songs(song_link=link, song_title=track, song_artist=artist,  tags=tags, created_at=created_at, updated_at=updated_at)
-    
-  print('The song is ' + str(song))
+
   try:
     db.session.add(song)
     db.session.commit()

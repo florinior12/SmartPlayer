@@ -70,11 +70,37 @@ $(document).ready(function () {
     $('a.index_page').click(function() {
       $.ajax({
         url  : '/popular_songs',
-        type : 'GET',
+        type : 'POST',
+        data: JSON.stringify({type:'popular'}),
         success: function(response) {
                 $('#my_container').html(response);
-            }
+            },
+        contentType: 'application/json;charset=UTF-8'
       });
       return false;
     });    
+    $('a.more_artist').click(function() {
+      $.ajax({
+        url : '/popular_songs',
+        type: 'POST',
+        data: JSON.stringify({type:'artist_top',artist_name:$('h6#song_artist').text()}),
+        success: function(response) {
+          $('#my_container').html(response);
+        },
+        contentType: 'application/json;charset=UTF-8'
+      });
+      return false;
+    });
+    $('a.more_genre').click(function() {
+      $.ajax({
+        url : '/popular_songs',
+        type: 'POST',
+        data: JSON.stringify({type:'genre_top',artist_name:$('h6#song_artist').text(),track_name:$('h5#song_title').text()}),
+        success: function(response) {
+          $('#my_container').html(response);
+        },
+        contentType: 'application/json;charset=UTF-8'
+      });
+      return false;
+    });
 });

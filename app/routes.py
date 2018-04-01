@@ -4,7 +4,7 @@ from app.youtube_videos import youtube_search
 from app.helpers import parse_response, search_liked
 from app.models import Songs
 from app.controllers import add_song, show_songs, delete_all_songs
-from app.songs_api import top_tracks, search_track
+from app.songs_api import top_tracks, search_track, artist_top_tracks, genre_top_tracks
 import datetime
 
 
@@ -51,12 +51,25 @@ def search_song():
   video_list = parse_response(response)
   return render_template('search.html',videos_yt=video_list)
 
-@app.route('/popular_songs', methods=['GET'])
+@app.route('/popular_songs', methods=['GET', 'POST'])
 def popular_songs():
-  video_list = []
-  if not 'songs_list' in session:
-      session['songs_list'] = top_tracks(key=app.config['LASTFM_API_KEY'])
-  return render_template('popular.html', songs_lfm=session['songs_list'])
+  req_json = request.get_json()
+  if req_json['type'] == 'popular':
+    if not 'popular_songs' in session:
+        session['popular_songs'] = top_tracks(key=app.config['LASTFM_API_KEY'])
+    return render_template('popular.html', songs_lfm=session['songs_list'])
+  elif req_json['type'] == 'artist_top':
+    sess_param = req_json['artist_name']
+    if not sess_param in session:
+      session[sess_param] = artist_top_tracks(sess_param,key=app.config['LASTFM_API_KEY'])
+    return render_template('popular.html', songs_lfm=session[sess_param])
+  elif req_json['type'] == 'genre_top':
+    sess_param = req_json['artist_name'] + req_json['track_name']
+    #if not sess_param in session:
+    session[sess_param] = genre_top_tracks(req_json['artist_name'],req_json['track_name'],key=app.config['LASTFM_API_KEY'])
+    return render_template('popular.html', songs_lfm=session[sess_param])
+
+
 
 @app.route('/', methods=["GET", "POST"])
 @app.route('/index', methods=["GET", "POST"])

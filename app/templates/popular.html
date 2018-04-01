@@ -4,7 +4,7 @@
       {% for song in songs_lfm %}
         <tr>
             <td rowspan="2"><img src="{{song.thumbnail}}"></td>
-            <td class="song_link"><a id="play_track_name" href="#"><h4 class="song_name">{{song.track_name}}</h4></a></td>
+            <td class="song_link"><a id="play_track_name" href="#"><h4 class="song_name">{{song.track_name}} {% if song.tag %} {{song.tag}}{% endif %} </h4></a></td>
             <tr><td class="song_artist">{{song.artist}}</td></tr>
             
         </tr>

@@ -1,4 +1,5 @@
 from app.models import Songs
+import urllib
 def parse_response(response):
   video_list = []
 
@@ -37,3 +38,6 @@ def process_title(title):
     title = title.replace(kw,'')
 
   return title
+
+def process_name(*args):
+  return urllib.parse.quote_plus(args[0].strip().lower()), urllib.parse.quote_plus(args[1].strip().lower())
