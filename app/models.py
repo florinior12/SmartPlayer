@@ -1,5 +1,6 @@
 from app import db
 
+#this class defines the Song model which is found in the database
 class Songs(db.Model):
   song_id = db.Column('song_id', db.Integer, primary_key = True,autoincrement=True)
   song_link = db.Column(db.String(100))

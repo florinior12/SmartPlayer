@@ -12,6 +12,9 @@ ARTIST_TOP_TRACKS = 'artist.getTopTracks'
 TAG_TOP_TRACKS = 'tag.getTopTracks'
 FORMAT_JSON = '&format=json'
 
+#following methods connect to the LastFM api and obtain something
+
+#obtain current popular songs
 def top_tracks(key):
   url = LAST_FM_API + '?method=' + GET_TOP_TRACKS + '&api_key=' +  key + FORMAT_JSON
   my_resp = requests.get(url)
@@ -31,6 +34,7 @@ def top_tracks(key):
 
   return to_return
 
+#search for a certain track in order to obtain the artist name and song name, if it's not found then return unknown
 def search_track(track_name,key):
   track_name = process_title(track_name)
   #print(track_name)
@@ -44,12 +48,7 @@ def search_track(track_name,key):
   except Exception as e:
     return {'artist':'Unknown artist', 'title':'Unknown song'}
   
-def track_info(artist,track, key):
-
-  url = LAST_FM_API + '?method=' + TRACK_INFO + '&api_key=' + key + '&artist=' + artist + '&track=' + track + FORMAT_JSON
-  my_resp = requests.get(url)
-  data = json.loads(my_resp.content)
-
+#get the tags of a song
 def track_tags(artist,track, key):
   artist,track = process_name(artist,track)
 
@@ -66,6 +65,7 @@ def track_tags(artist,track, key):
 
   return tags[:-1]  #to remove last semi-colon
 
+#get more songs of an artist
 def artist_top_tracks(artist,key):
   url = LAST_FM_API + '?method=' + ARTIST_TOP_TRACKS + '&artist=' + urllib.parse.quote_plus(artist) + '&api_key=' + key + FORMAT_JSON
   my_resp = requests.get(url)
@@ -84,6 +84,7 @@ def artist_top_tracks(artist,key):
     my_resp.raise_for_status() 
   return to_return
 
+#get similar songs by genre
 def genre_top_tracks(artist,track,key):
   limit = 5
   to_return = []

@@ -1,3 +1,5 @@
+//this javascript file is taken from a tutorial for youtube embedded player and added a few lines
+
 var player,
     time_update_interval = 0;
 
@@ -14,6 +16,9 @@ function onYouTubeIframeAPIReady() {
     });
    
 }
+
+//this function is used such that when the song changes the app makes an ajax request to check whether the song is liked already
+//depending on the response it changes the like button accordingly
 function onPlayerStateChange(event) {
     if (event.data == YT.PlayerState.PLAYING) {
         $.ajax({
