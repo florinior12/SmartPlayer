@@ -55,9 +55,6 @@ def track_tags(artist,track, key):
   url = LAST_FM_API + '?method=' + TOP_TAGS + '&api_key=' + key + '&artist=' + artist + '&track=' + track + FORMAT_JSON
   my_resp = requests.get(url)
   data = json.loads(my_resp.content)
-  with open('cev.json','w+') as f:
-    f.write(url)
-
 
   tags = ''
   for tag in data['toptags']['tag'][:5]:

@@ -1,5 +1,12 @@
 $(document).ready(function() {
   $('#delete_all').click(function() {
+    $.ajax ({
+    url : '/delete_all',
+    type: 'GET',
+    success: function(response) {
+          $('#my_container').html(response);
+      }
+  });
    return false;
 });
 

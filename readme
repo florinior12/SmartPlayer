@@ -1,0 +1,31 @@
+For Ubuntu 16.04	
+
+1. The app first requires a MySQL database to be imported:
+	If you don’t have a MySQL server installed, please follow a basic tutorial like this one https://www.digitalocean.com/community/tutorials/a-basic-mysql-tutorial
+	After configuring the server, log in using
+		mysql -u <mysql_username> -p
+	Now we are using the mysql shell. Create the database that we’re going to use
+		create database smart_player;
+	Select it
+		use smart_player;
+	Import the data necessary using (where smart_player.sql is the file contained with the archive that I sent)
+		source smart_player.sql;
+	Now if you type 
+		show tables;
+	You should see a table named “songs”. Now to exit the mysql shell type
+		exit;
+2. To configure the database, enter your mysql username and password in config.py at this line
+	SQLALCHEMY_DATABASE_URI = 'mysql+pymysql://<mysql_username>:<mysql_password>@localhost:3306/smart_player'
+3. Then we will need a virtual environment manager to use in order to have the required packages. I used Anaconda. 
+	Download Anaconda from here https://www.anaconda.com/download/#linux
+	To find python version type in terminal
+		python --version
+4. To install Anaconda open terminal in download folder of the file and type
+	bash <downloaded_file_name>
+	the downloaded file name should be something like Anaconda*-*.*.*-Linux-x86-**.sh
+5. Then to set up the environment open the terminal in the folder of the project, make sure that the file environment.yml is there because it will be used to create the environment containing all the used packages and type (this will take a while)
+	conda env create -f environment.yml
+6. Now to activate the environment type in terminal
+	source activate proiect2_test
+7. Start the app by typing
+	python run.py
